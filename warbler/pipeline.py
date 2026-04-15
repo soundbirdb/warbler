@@ -45,6 +45,15 @@ class BatchReport:
     def skipped_count(self) -> int:
         return sum(1 for r in self.results if r.skipped)
 
+    def failed_paths(self) -> List[str]:
+        """Return the paths of all files that encountered an error."""
+        return [r.path for r in self.results if r.error is not None]
+
+
+def _is_supported(audio_path: str) -> bool:
+    """Return True if the file extension is in SUPPORTED_EXTENSIONS."""
+    return Path(audio_path).suffix.lower() in SUPPORTED_EXTENSIONS
+
 
 def process_file(
     audio_path: str,
@@ -62,6 +71,11 @@ def process_file(
     Returns:
         A ProcessingResult describing the outcome.
     """
+    if not _is_supported(audio_path):
+        msg = f"Unsupported file type: {Path(audio_path).suffix!r}"
+        logger.warning(msg)
+        return ProcessingResult(path=audio_path, fingerprint="", error=msg)
+
     try:
         if not force:
             existing = read_fingerprint(audio_path)
