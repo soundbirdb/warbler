@@ -41,6 +41,11 @@ Run spectral fingerprinting only (no tagging):
 warbler fingerprint ./music/ --format json
 ```
 
+Preview changes without writing anything:
+```bash
+warbler tag --recursive ./music/ --dry-run
+```
+
 **Common options:**
 
 | Flag | Description |
@@ -49,6 +54,8 @@ warbler fingerprint ./music/ --format json
 | `--output` | Destination directory for processed files |
 | `--dry-run` | Preview changes without writing |
 | `--format` | Output format for fingerprint data (`json`, `csv`) |
+| `--workers` | Number of parallel workers (default: 4) |
+| `--verbose` | Enable verbose logging output |
 
 ---
 
