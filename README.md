@@ -59,6 +59,18 @@ warbler tag --recursive ./music/ --dry-run
 
 ---
 
+## Supported Formats
+
+warbler currently supports the following audio formats:
+
+- MP3 (`.mp3`)
+- FLAC (`.flac`)
+- WAV (`.wav`)
+- AAC (`.aac`, `.m4a`)
+- OGG Vorbis (`.ogg`)
+
+---
+
 ## Requirements
 
 - Python 3.8+
