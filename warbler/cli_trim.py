@@ -40,6 +40,10 @@ def add_trim_subcommand(subparsers: argparse._SubParsersAction) -> None:  # noqa
 def _run_trim(args: argparse.Namespace) -> None:
     paths = _collect_audio_files(args.directory, recursive=args.recursive)
 
+    if not paths:
+        print(f"No audio files found in {args.directory}.")
+        return
+
     if args.output_dir:
         args.output_dir.mkdir(parents=True, exist_ok=True)
 
