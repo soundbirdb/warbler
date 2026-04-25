@@ -27,6 +27,16 @@ def add_schedule_subcommand(subparsers: argparse._SubParsersAction) -> None:
 
 
 def _run_schedule(args: argparse.Namespace) -> None:
+    if not args.directory.exists():
+        print(f"Error: directory '{args.directory}' does not exist.", file=sys.stderr)
+        sys.exit(1)
+    if not args.directory.is_dir():
+        print(f"Error: '{args.directory}' is not a directory.", file=sys.stderr)
+        sys.exit(1)
+    if args.interval <= 0:
+        print("Error: --interval must be a positive number.", file=sys.stderr)
+        sys.exit(1)
+
     def on_report(report):
         print(format_summary(report))
         sys.stdout.flush()
