@@ -35,6 +35,17 @@ class BatchWriteReport:
     def failed_paths(self) -> List[Path]:
         return [r.path for r in self.results if not r.ok]
 
+    def raise_on_errors(self) -> None:
+        """Raise a RuntimeError if any writes failed, summarising the failures."""
+        if self.error_count == 0:
+            return
+        details = "; ".join(
+            f"{r.path}: {r.error}" for r in self.results if not r.ok
+        )
+        raise RuntimeError(
+            f"{self.error_count} file(s) failed to write: {details}"
+        )
+
 
 def write_fingerprint_to_file(
     path: Path,
